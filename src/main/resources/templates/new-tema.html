@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+  <title>Firefight</title>
+  <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/nav :: nav}" th:width="examenes=${examenes}"></div>
+
+
+<main role="main" class="container-fluid my-5">
+
+
+  <div class="alert alert-success lert-dismissible fade show" id="temaInsertada" role="alert" th:width="${tema}" th:if="${tema}" style="display: none">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="alert-heading">Tema insertado!</h4>
+    <p th:text="${tema?.texto}"></p>
+  </div>
+
+  <div>
+    <h1>Add Tema</h1>
+  </div>
+
+
+  <form th:action="@{/new-tema}" th:object="${nuevoTema}" method="post">
+
+    <div class="form-group">
+      <label for="texto">Texto:</label>
+      <textarea class="form-control" id="texto" rows="3" th:field="*{textoTema}"></textarea>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <label for="idAgrupacion">Asignar a una Agrupación:</label>
+      <select id="idAgrupacion" class="form-control form-control-lg" th:field="*{idAgrupacion}">
+        <option value="0">Selecciona una agrupacion</option>
+        <option th:each="agrupacion : ${agrupaciones}" th:value="${agrupacion.id}" th:text="${agrupacion.texto}">Tema XXX</option>
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+
+  </form>
+
+
+</main>
+
+<script type="text/javascript">
+    // <![CDATA[
+    jQuery(document).ready(function () {
+
+        const alert= $('.alert');
+
+        alert.alert();
+        const insertadas = $('#temaInsertada').length;
+        if(insertadas > 0) {
+            alert.show();
+        }
+
+    });
+    // ]]>
+</script>
+</body>
+</html>

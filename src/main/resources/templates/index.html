@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+    <title>A·K·D·M·V·M</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body class="bg-light">
+
+<div class="d-flex justify-content-between">
+
+    <div class="brand">
+        <H1>AKDMVM</H1>
+    </div>
+
+    <div class="botones d-flex align-items-center" sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" class="btn btn-primary btn-lg mr-2" th:text="#{action.login}" sec:autho>Log In</a>
+        <a th:href="@{/register}" class="btn btn-light btn-lg" th:text="#{action.register}">Register Me</a>
+    </div>
+
+    <div class="botones d-flex align-items-center" sec:authorize="isAuthenticated()">
+        <a sec:authentication="name" class="btn btn-link" th:href="@{/profile}"></a>
+    </div>
+</div>
+
+<div class="position-relative overflow-hidden p-3 p-md-0 text-center bg-light mb-3">
+    <div class="col-lg-8 col-md-8 p-lg-1 mx-auto my-0">
+        <h1 class="display-4 font-weight-normal"><i class="fa fa-fire-alt fa-2x"></i> Prepara tus Tests</h1>
+        <p class="lead font-weight-normal">Prepara tus oposiciones con  tests y simulacros de examen.... también puedes hacer exámenes oficiales de otros años, buscar y repasar todos los conceptos.</p>
+    </div>
+</div>
+
+<main role="main" class="container-fluid mb-3">
+
+    <div class="album py-0 bg-light">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="home-card mb-4 shadow-sm">
+                        <div class="bd-placeholder-img card-img-top py-5 text-center caja-test">
+                            <i class="fa fa-vial fa-5x logo-test"></i><h1>Tests</h1>
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="card-text">Selecciona los temas de todo el contenido y realiza un test pregunta a pregunta indicando cuantas preguntas quieres en total.</p>
+                            <div class="d-flex justify-content-center align-items-center">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="home-card mb-4 shadow-sm">
+                        <div class="bd-placeholder-img card-img-top py-5 text-center caja-simulacro">
+                            <i class="far fa-clipboard fa-5x logo-simulacro"></i><h1 class="texto-simulacro">Simulacros</h1>
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="card-text">Realiza un simulacro de examen con 50, 75 o 100 preguntas random de todo el temario y un cronómetro que te marcará el tiempo. </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="home-card mb-4 shadow-sm">
+                        <div class="bd-placeholder-img card-img-top py-5 text-center caja-examenes">
+                            <i class="far fa-building fa-5x logo-examenes"></i><h1 class="texto-examanes">Examenes Oficial</h1>
+                        </div>
+                        <div class="card-body text-center">
+                            <p class="card-text">Practica con los exámenes oficiales de otras convocatorias, preguntas que ya han salido y que pueden volver a caer.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()" class="d-flex justify-content-center"><a th:href="@{/register}" class="btn btn-secondary btn-lg">Suscribte Ahora</a></div>
+    <div sec:authorize="isAuthenticated()" class="d-flex justify-content-center"><a th:href="@{/backstage}" class="btn btn-primary btn-lg">Accede a la Aplicación</a></div>
+
+</main>
+
+<div th:insert="~{fragments/footer :: copy}"></div>
+
+</body>
+</html>

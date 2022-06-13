@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+    <title>Firefight - Test</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body class="bg-light backstage">
+<div th:replace="~{fragments/nav :: nav}"></div>
+<div class="barra-progreso">
+    <div class="progress" style="height: 5px">
+        <div class="progress-bar bg-purple progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</div>
+<main role="main" class="container-fluid container-fluid-simulacro">
+
+    <input  type="hidden" id="numPreguntasTotales" th:value="${not #lists.isEmpty(preguntas) ? preguntas.size() : '0'}" />
+    <input type="hidden" id="txtAciertos"/>
+    <input type="hidden" id="txtErrores"/>
+    <input type="hidden" id="segundosPorPregunta" th:value="${@environment.getProperty('simulacro.segundos-por-pregunta')}"/>
+
+        <th:block th:each="pregunta,iter : ${preguntas}">
+
+            <main role="main" th:replace="fragments/pregunta :: pregunta(${pregunta},${iter.index+1})"></main>
+
+        </th:block>
+
+        <p class="my-5"></p>
+</main>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="mdlResultado">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Calificación: <span id="notaFinal" class=" rounded text-white-50 p-2"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <p id="txtResultado">Has sacado {} bien y {} mal</p>
+                <p id="txtPorcentaje">Porcentaje de acierto 20%</p>
+                <div class="progress" style="height: 25px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                         aria-valuemin="0" aria-valuemax="100" id="porcentajeAciertos"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Finalizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/simulacro.js" th:src="@{/js/simulacro.js}"></script>
+<script type="text/javascript">
+    // <![CDATA[
+    jQuery(document).ready(function () {
+
+        const reloj = $('#clock');
+        const botonCorregir = $('#button-corregir-simulacro');
+        botonCorregir.show();
+        $('#admin-button-nav').hide();
+
+
+        // un minuto por cada pregunta....
+        const segundosPorPregunta = $('#segundosPorPregunta').val() * 1000;
+        const milisegundos = $('#numPreguntasTotales').val() * segundosPorPregunta;
+        Simulacro.cuentaAtras(reloj,milisegundos);
+
+        botonCorregir.on('click', function () {
+            Simulacro.resolver();
+        });
+
+
+    });
+    // ]]>
+</script>
+
+
+<div th:insert="~{fragments/footer :: copy}"></div>
+</body>
+</html>

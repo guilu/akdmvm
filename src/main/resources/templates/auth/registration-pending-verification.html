@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <title th:utext="#{page.title.registrationPendingVerification}">
+    Registration Pending Verificaiton
+  </title>
+</head>
+
+<body>
+<div>
+  <section id="main_content">
+    <div class="content">
+      <h1 th:utext="#{message.regThankYou}"></h1>
+      <div class="container">
+        <div>
+          <p th:utext="#{message.regSuccess}"></p>
+        </div>
+      </div>
+      <a th:href="@{/}" th:text="#{page.title.home}">Home</a>
+    </div>
+  </section>
+</div>
+</body>
+</html>

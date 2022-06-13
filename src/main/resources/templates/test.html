@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+    <title>Firefight - Test</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body class="bg-light backstage">
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+
+
+<article class="container-fluid">
+
+    <div class="row bg-white box-shadow p-2">
+        <div class="col-lg-6 col-md-6 col-sm-6" style="width: 50%">
+            <span>Aciertos</span> <span th:text="${contadoresTest.aciertos}" id="aciertos" class="font-weight-bold bg-dark p-1 text-white rounded"> 0 </span>
+            <span>Errores</span> <span th:text="${contadoresTest.errores}" id="errores" class="ont-weight-bold bg-red p-1 text-white rounded"> 0 </span>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 text-right" style="width:50%">
+            <span>Realizados: </span><span th:text="${contadoresTest.current}" id="current" class="font-weight-bold p-1 rounded"> 0 </span> / <span th:text="${preguntas?.size()}">Total</span>
+        </div>
+    </div>
+
+</article>
+
+
+<main role="main" class="container-fluid one-question">
+
+    <form id="formPregunta" th:action="@{/pasaPregunta}" th:object="${contadoresTest}" method="post">
+        <input type="hidden" id="txtAciertos" th:field="*{aciertos}"/>
+        <input type="hidden" id="txtErrores" th:field="*{errores}"/>
+        <input type="hidden" id="txtCurrent" th:field="*{current}"/>
+        <input type="hidden" id="txtNumPreguntasPorTemas" th:field="*{numPreguntasPorTemas}"/>
+        <input type="hidden" id="txtNumPreguntasTotal" th:field="*{numPreguntasTotal}" th:value="${not #lists.isEmpty(preguntas) ? preguntas.size() : '0'}"/>
+        <input type="hidden" id="fallada" th:field="*{fallada}"/>
+        <input type="hidden" id="repetirFalladas" th:field="*{repetirFalladas}"/>
+    </form>
+
+    <div th:replace="fragments/pregunta :: pregunta(${preguntas?.get(contadoresTest?.current)},${contadoresTest?.current}+1)"></div>
+
+
+    <div class="row">
+        <span class="col-sm-6"></span>
+        <span class="col-sm-6 text-right">
+            <a class="btn btn-primary disabled" href="#" role="button" id="btnNext" style="display: none">Siguiente »</a>
+            <a class="btn btn-warning" href="#" role="button" id="btnCorregir">Corregir »</a>
+        </span>
+    </div>
+
+
+</main>
+
+<div class="modal" tabindex="-1" role="dialog" id="mdlError">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <p id="txtError">Sorry!, de los temas seleccionados no he podido obtener ninguna pregunta.
+                    Vuelve atrás y selecciona otros temas.</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary text-white" id="btnVolverAtras" th:href="@{/}">volver atrás</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="mdlResultado">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Fin del Test! Calificación.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <p id="txtResultado">Has sacado {} bien y {} mal</p>
+                <p id="txtPorcentaje">Porcentaje de acierto 20%</p>
+                <div class="progress" style="height: 25px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                         aria-valuemin="0" aria-valuemax="100" id="porcentajeAciertos"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary text-white" id="btnRepetirFallos" th:classAppend="${(session.get('preguntasFalladas')).size() > 0 ? 'd-block' : 'd-none' }">Repetir solo preguntas Falladas</a>
+                <a class="btn btn-danger text-white" id="btnFinalizar">Finalizar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../static/js/test.js" th:src="@{/js/test.js}"></script>
+<script type="text/javascript">
+    // <![CDATA[
+    jQuery(document).ready(function () {
+
+        const numPreguntasTotales = $('#txtNumPreguntasTotal').val();
+
+        if (numPreguntasTotales === '0') {
+            $('#mdlError').modal('show');
+        }
+
+        $('#btnCorregir').on('click', function () {
+
+            //desactivo todos los radios
+            $('input[type=radio]').prop('disabled',true);
+
+
+            var current = $('#current');
+            var txtCurrent = $('#txtCurrent');
+            var aciertos = $('#aciertos');
+            var txtAciertos = $('#txtAciertos');
+            var errores = $('#errores');
+            var txtErrores = $('#txtErrores');
+
+            var okMarcado = false;
+            var errorMarcado = false;
+
+
+            var soluciones = $('.solucion');
+            soluciones.each(function () {
+                var solucion = $(this);
+                var respuesta = solucion.find('.respuesta');
+                var check = $('#r_' + respuesta.prop('id'));
+                var checked = check.prop('checked');
+                if (respuesta.hasClass('c')) {
+                    respuesta.addClass('fa fa-check-circle font-color-green');
+                    if (checked) {
+                        okMarcado = true;
+                    }
+                } else {
+                    respuesta.addClass('fa fa-times-circle font-color-red')
+                    if (checked) {
+                        errorMarcado = true;
+                    }
+                }
+                //muestra la solución
+                solucion.show();
+
+            });
+
+            if (okMarcado && !errorMarcado) {
+                var currentAciertos = parseInt(aciertos.text()) + 1;
+                aciertos.text(currentAciertos);
+                txtAciertos.val(currentAciertos);
+                $('#fallada').val('false');
+            } else {
+                var currentErrores = parseInt(errores.text()) + 1;
+                errores.text(currentErrores);
+                txtErrores.val(currentErrores);
+                $('#fallada').val('true');
+            }
+            $(this).addClass("disabled").hide();
+            $('#btnNext').removeClass('disabled').show();
+            var currentCurrent = parseInt(current.text()) + 1;
+            current.text(currentCurrent);
+            txtCurrent.val(currentCurrent);
+
+            if (current.text() === (numPreguntasTotales)) {
+
+                $('#btnNext').text("Finalizar!");
+            }
+        });
+
+        $('#btnNext').on('click', function () {
+            var current = $('#current');
+            var txtCurrent = $('#txtCurrent');
+            var aciertos = $('#aciertos');
+            var txtAciertos = $('#txtAciertos');
+            var errores = $('#errores');
+            var txtErrores = $('#txtErrores');
+
+            if (current.text() === (numPreguntasTotales)) {
+            	//es la última pregunta.... 
+            	//si no hay preguntas falladas y esta se ha fallado ya que dejar repertirla
+            	if(  $('#btnRepetirFallos').hasClass('d-none') && ($('#fallada').val() == 'true') ) {
+            		$('#btnRepetirFallos').addClass('d-block');
+            	} else {
+            		$('#btnRepetirFallos').removeClass('d-block');
+            	}
+            	
+                var numAciertos = aciertos.text();
+                var numErrores = errores.text();
+                var porcentaje;
+                if (numErrores === 0) {
+                    porcentaje = 100;
+                } else {
+                    porcentaje = (numAciertos / numPreguntasTotales) * 100;
+                }
+
+                //si no hay preguntas falladas y esta se ha fallado ya que dejar repertirla
+                if(  $('#btnRepetirFallos').hasClass('d-none') && ($('#fallada').val() == 'true') ) {
+                    $('#btnRepetirFallos').addClass('d-block');
+                } else {
+                    $('#btnRepetirFallos').removeClass('d-block');
+                }
+
+                $('#txtResultado').text('Has tenido ' + numAciertos + ' aciertos y ' + numErrores + ' errores.');
+                $('#txtPorcentaje').text('Porcentaje de acierto: ' + porcentaje.toFixed(0) + '%');
+                $('#porcentajeAciertos').css('width', porcentaje + '%');
+                $('#mdlResultado').modal('show');
+            } else {
+                $('#formPregunta').submit();
+            }
+        });
+
+        $('#btnRepetirFallos').on('click', function(){
+            $('#repetirFalladas').val('true');
+           $('#formPregunta').submit();
+        });
+
+        $('#btnFinalizar').on('click', function(){
+            $('#formPregunta').submit();
+        });
+
+        $(document).keypress(function (e) {
+            if ((e.which == 13) || (e.which ==32)) {
+                if ($("#btnCorregir").hasClass('disabled')) {
+                    $("#btnNext").click();
+                }
+                if ($("#btnNext").hasClass('disabled')) {
+                    $("#btnCorregir").click();
+                }
+
+            }
+        });
+    });
+    // ]]>
+</script>
+
+
+<div th:insert="~{fragments/footer :: copy}"></div>
+</body>
+</html>

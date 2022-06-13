@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<nav th:fragment="nav" class="header navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#" th:href="@{/}"><i class="fa fa-fire-alt"></i> AKDMVM</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05"
+            aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--/*@thymesVar id="menu" type="String"*/-->
+    <div class="collapse navbar-collapse" id="navbarsExample05">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" th:classappend="${menu == 'temas' ? 'active' : ''}">
+                <a class="nav-link" href="../../temas-seleccion.html" th:href="@{/temas-seleccion}">Temas <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown" th:classappend="${menu == 'simulacro' ? 'active' : ''}">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSimulacro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Simulacro
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="@{/simulacro/50}">50 preguntas</a>
+                    <a class="dropdown-item" th:href="@{/simulacro/75}">75 preguntas</a>
+                    <a class="dropdown-item" th:href="@{/simulacro/100}">100 preguntas</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown" th:classappend="${menu == 'examenes' ? 'active' : ''}">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownExamen" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Exámenes
+                </a>
+                <!--/*@thymesVar id="examenes" type="ArrayList<com.dbhacademy.firefight.model.entity.Examen>"*/-->
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <!--/*@thymesVar id="examen" type="com.dbhacademy.firefight.model.entity.Examen"*/-->
+                    <a class="dropdown-item" th:each="examen,iter : ${examenes}"  th:href="@{'/examen/' + ${examen.id}}" th:text="${examen.texto}">Nombre examen</a>
+                </div>
+            </li>
+        </ul>
+        <div class="form-inline">
+            <ul class="navbar-nav mr-2" id="admin-button-nav">
+                <li class="nav-item dropdown mx-auto" th:classappend="${ (menu == 'new-pregunta' || menu == 'new-tema') ? 'active' : '' }">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Administrar
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../../new-agrupacion.html" th:href="@{/new-agrupacion}" th:classappend="${menu == 'new-agrupacion' ? 'active' : ''}">Nuevo Agrupacion</a>
+                        <a class="dropdown-item" href="../../new-tema.html" th:href="@{/new-tema}" th:classappend="${menu == 'new-tema' ? 'active' : ''}">Nuevo Tema</a>
+                        <a class="dropdown-item" href="../../new-pregunta.html" th:href="@{/new-pregunta}" th:classappend="${menu == 'new-pregunta' ? 'active' : ''}">Nueva Pregunta</a>
+                        <!-- <div class="dropdown-divider"></div> -->
+                        <!-- <a class="dropdown-item" href="../delete-agrupacion.html" th:href="@{/delete-agrupacion}" th:classappend="${menu == 'delete-agrupacion' ? 'active' : ''}">Borrar Agrupacion</a> -->
+                    </div>
+                </li>
+            </ul>
+
+            <a class="btn btn-primary mr-2" href="#" id="button-corregir-simulacro" role="button" style="display: none">Corregir »</a>
+            <a class="btn btn-info mr-2" th:href="@{/temas-seleccion}" id="button-finalizar-simulacro" role="button" style="display: none">Finalizar »</a>
+            <span class="navbar-text px-3 rounded bg-purple " id="menu-reloj" style="display: none">
+                <i class="fa fa-clock"></i> <span id="clock"></span>
+            </span>
+        </div>
+
+        <form class="form-inline my-2 my-md-0" method="post" th:action="@{/buscar}" th:if="${menu != 'simulacro' and menu != 'examenes'}">
+            <label>
+                <input class="form-control" type="text" placeholder="Buscar..." th:name="textoABuscar" />
+            </label>
+        </form>
+        <div class="form-inline">
+            <ul class="navbar-nav mr-2" id="admin-button-user">
+                <li class="nav-item dropdown mx-auto" th:classappend="${ (menu == 'new-pregunta' || menu == 'new-tema') ? 'active' : '' }">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authentication="name">
+                        Usuario
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../../auth/profile.html" th:href="@{/profile}">Perfil</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/logout}">Log Out</a>
+                        <!-- <div class="dropdown-divider"></div> -->
+                        <!-- <a class="dropdown-item" href="../delete-agrupacion.html" th:href="@{/delete-agrupacion}" th:classappend="${menu == 'delete-agrupacion' ? 'active' : ''}">Borrar Agrupacion</a> -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+</html>

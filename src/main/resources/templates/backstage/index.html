@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+  <title>A·K·D·M·V·M Backstage</title>
+  <link rel="stylesheet" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<!--/*@thymesVar id="stats" type="com.dbhstudios.akdmvm.domain.dto.TestStatsDTO"*/-->
+<body sec:authorize="isAuthenticated()" class="backstage" th:with="stats=${stats}">
+
+<h1>Stats</h1>
+
+<h2>Tests hechos: <span th:text="${stats.testFinalizados}">N</span></h2>
+<h2>Media Aciertos: <span th:text="${stats.mediaAciertos}">0%</span></h2>
+<h2>Media Fallos: <span th:text="${stats.mediaFallos}">0%</span></h2>
+<h2></h2>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+spring:
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    username: ${GOOGLE_SMTP_USERNAME}
+    password: ${GOOGLE_SMTP_PASSWORD}
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+  messages:
+    encoding: utf-8
+    basename: i18n/messages
+  web:
+    resources:
+      static-locations: file:src/main/resources/static/
+      cache:
+        period: 0  #HTML template files and all static-resources load from resources folder instead of folder so by changing every file we don’t need to build project again.
+
+user:
+  security:
+    defaultAction: deny
+    protectedURIs: /backstage
+    unprotectedURIs: /,/index,/searched,/buscar,/favicon.ico,/webfonts/**/*,/css/**/*,/js/**/*,/img/**/*,/register,/auth/registration,/auth/registrationConfirm,/forgot-password,/sendRegistrationToken,/resetPassword,/changePassword,/savePassword,/oauth/**
+
+    disableCSRFdURIs: /no-csrf-test
+
+    loginURI: /login
+    loginSuccessURI: /?messageKey=message.loginSuccess
+
+    logoutURI: /logout
+    logoutSuccessURI: /?messageKey=message.logoutSuccess
+
+    registrationURI: /register
+    registrationPendingURI: /registration-pending-verification
+    registrationNewVerificationURI: /request-new-verification-email
+    registrationSuccessURI: /registration-complete
+
+    forgotPasswordURI: /forgot-password
+    forgotPasswordPendingURI: /forgot-password-pending-verification
+    forgotPasswordChangeURI: /forgot-password-change
+
+    updateUserURI: /update-user
+
+  registration:
+    sendVerificationEmail: true
+
+  mail:
+    fromAddress: academivm.com
+
+  audit:
+    logEvents: true
+    flushOnWrite: true
+    logFilePath: ./user-audit.log
+
+  purgetokens:
+    cron:
+      # minutes hour day_of_the_month month day_of_the_week
+      # * (all) ? (any) - (range) , (values) / (increments) L (last) W (weekday)
+      expression: 0 0 3 * * ?
+
+
+logging:
+  level:
+    org.springframework.security: WARN
+    org.springframework.web: WARN
+    org.hibernate: WARN
+
+    com.dbhstudios.akdmvm: DEBUG
+
+
+server:
+  port: ${PORT:3000}   # HTTP (Tomcat) port
+  tomcat:
+    relaxed-query-chars: '{,}'
+
+
+simulacro:
+  segundos-por-pregunta: 60

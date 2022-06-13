@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+  <title>Firefight</title>
+  <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/nav :: nav}" th:width="examenes=${examenes}"></div>
+
+
+<main role="main" class="container-fluid my-5">
+
+  <div>
+    <h1>Delete Agrupacion</h1>
+  </div>
+
+
+  <form th:action="@{/delete-agrupacion}" method="post" th:object="${agrupacion}">
+
+    <div class="form-group">
+      <label for="idAgrupacion">Asignar a una Agrupación:</label>
+      <select id="idAgrupacion" class="form-control form-control-lg" th:field="*{id}">
+        <option value="0">Selecciona una agrupacion</option>
+        <option th:each="agrupacion : ${agrupaciones}" th:value="${agrupacion.id}" th:text="${agrupacion.texto}">Tema XXX</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">Borrar</button>
+
+  </form>
+
+</main>
+
+</body>
+</html>

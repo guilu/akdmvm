@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+
+  <title th:utext="#{page.title.registrationComplete}">
+    Registration Complete!
+  </title>
+  <link rel="stylesheet" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+
+<body>
+
+<div class="container">
+  <section id="main_content">
+    <div class="content">
+      <h1 th:utext="#{message.regSuccessConfirmed}"></h1>
+      <div class="container">
+        <div>
+          <span th:utext="#{message.regSuccessNextSteps}"></span>
+          <a th:href="@{/backstage}">
+            <span th:text="#{label.pages.backstage}"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>

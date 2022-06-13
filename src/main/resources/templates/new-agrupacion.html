@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+  <title>Firefight</title>
+  <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/nav :: nav}" th:width="examenes=${examenes}"></div>
+
+
+<main role="main" class="container-fluid my-5">
+
+  <div class="alert alert-success lert-dismissible fade show" id="temaInsertada" role="alert" th:width="${agrupacion}" th:if="${agrupacion}" style="display: none">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="alert-heading">Agrupación insertada!</h4>
+    <p th:text="${agrupacion?.texto}"></p>
+  </div>
+
+
+  <div>
+    <h1>Add Agrupacion</h1>
+  </div>
+
+
+  <form th:action="@{/new-agrupacion}" th:object="${nuevaAgrupacion}" method="post">
+
+    <div class="form-group">
+      <label for="texto">Texto:</label>
+      <textarea class="form-control" id="texto" rows="3" th:field="*{texto}"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">Guardar</button>
+
+  </form>
+
+</main>
+
+</body>
+</html>

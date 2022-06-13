@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+    <title>Firefight</title>
+    <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body class="bg-light backstage">
+<div th:replace="~{fragments/nav :: nav}" th:width="examenes=${examenes}"></div>
+
+<main role="main" class="container-fluid">
+
+    <form id="formTemas" th:action="@{/test}" th:object="${temasSeleccionados}" method="post">
+        <div class="my-3 mb-3 bg-white text-muted rounded">
+            <div class="form-group row p-3">
+                <label class="col-lg-4 col-sm-3 col-form-label text-right lh-150" for="cbNumPreguntas" >Número de preguntas por tema:</label>
+                <div class="col-lg-4 col-sm-3">
+                    <select class="form-control form-control-lg" id="cbNumPreguntas" th:field="*{numPreguntasPorTema}">
+                        <option value="999">Todas</option>
+                        <option value="10">10 preguntas</option>
+                        <option value="20">20 preguntas</option>
+                        <option value="30">30 preguntas</option>
+                    </select>
+                </div>
+                <div class="lh-100 col-lg-4 col-sm-6 generar-test">
+                    <a class="btn btn-primary btn-lg" href="#" role="button" id="btnGenerarTest">Generar Test</a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-between">
+            <div th:each="agrupacion,iter1 : ${agrupaciones}" class="mb-5 agrupacion card-bloque" th:id="${'a_' + agrupacion.id}">
+                <div class="card mx-2">
+                    <div class="card-bloque-header card-header"><h6 th:text="${agrupacion.texto}">AGRUPACION</h6></div>
+                    <div class="card-bloque-body card-body">
+                        <div th:each="tema,iter2 : ${agrupacion.temas}" class="form-check">
+                            <input class="form-check-input card-bloque-check" type="checkbox" th:id="${ 'chk_' + tema.id}" id="chk_id1" th:field="*{temas[__${tema.id - 1}__]}" th:value="${tema.id}"/>
+                            <label class="form-check-label card-bloque-label" th:for="${'chk_' + tema.id}" for="chk_id1">
+                                <span th:text="${tema.texto}" th:class="${tema.hasPreguntas() ? 'font-weight-bold' : ''}">Texto de tema 1</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</main>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="mdlError">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="txtError">Tienes que seleccionar algún tema.....</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="mdlTest">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Generando Test Autocorrectivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="txtTest">Vamos a generar un Test con.... </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnEmpezarTest">Vamos allá »</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{fragments/footer :: copy}"></div>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var formTemas = $('#formTemas');
+        var btn = $('#btnGenerarTest');
+        var cbnNumPreguntas = $('#cbNumPreguntas');
+
+        var btnTest = $('#btnEmpezarTest');
+
+        btn.on('click', function () {
+            var numTemasSeleccionados = formTemas.find("input[type=checkbox]:checked").length;
+
+            if (numTemasSeleccionados === 0) {
+                var txtError = $('#txtError');
+                txtError.text('Tienes que seleccionar al menos 1 tema');
+                $('#mdlError').modal('show');
+            } else {
+
+                var txtTest = $('#txtTest');
+                txtTest.text("Vamos a generar un contadoresTest de " + numTemasSeleccionados + " Tema con " + cbnNumPreguntas.val() + " preguntas por tema");
+                //$('#mdlTest').modal('show');
+                btnTest.click();
+            }
+        });
+
+
+        btnTest.on('click', function () {
+            formTemas.submit();
+        });
+
+    });
+</script>
+
+</body>
+</html>

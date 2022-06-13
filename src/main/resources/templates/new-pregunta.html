@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+  <title>Firefight</title>
+  <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/nav :: nav}" th:width="examenes=${examenes}"></div>
+
+
+<main role="main" class="container-fluid my-5 px-5">
+
+
+  <div class="alert alert-success lert-dismissible fade show" id="preguntaInsertada" role="alert" th:width="${pregunta}" th:if="${pregunta}" style="display: none">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="alert-heading">Pregunta insertada!</h4>
+    <p th:text="${pregunta?.texto}"></p>
+    <hr>
+    <p class="mb-0" th:each="respuesta,iter : ${pregunta?.getRespuestas()}" th:text="${'Respuesta ' + iter.index + ' --> ' + respuesta?.getTexto()}"></p>
+  </div>
+
+
+  <div>
+    <h1>Nueva pregunta</h1>
+  </div>
+
+
+  <!--@thymesVar id="nuevaPregunta" type="com.dbhacademy.firefight.model.dto.NuevaPreguntaDTO"-->
+  <form id="nuevaPreguntaForm" th:action="@{/new-pregunta}" method="post" th:object="${nuevaPregunta}">
+
+    <div class="form-group">
+      <label for="idTema">Asignar a un tema:</label>
+      <select id="idTema" class="form-control form-control-lg" th:field="*{idTema}">
+        <option value="0">Selecciona un tema</option>
+        <option th:each="tema : ${temas}" th:value="${tema.id}" th:text="${tema.texto}">Tema XXX</option>
+      </select>
+    </div>
+
+    <hr>
+
+    <div class="form-group">
+      <label for="pregunta">Texto Pregunta:</label>
+      <textarea class="form-control" id="pregunta" rows="3" th:field="*{textoPregunta}"></textarea>
+    </div>
+
+    <div class="form-group row">
+      <label for="respuesta1" class="col-sm-2 col-form-label">Respuesta 1</label>
+      <div class="form-check form-check-inline col-sm-1">
+        <input class="form-check-input" type="radio" name="respuestaCorrecta" id="respuesta1Correcta" th:value="1" th:field="*{respuestaCorrecta}">
+        <label class="form-check-label" for="respuesta1Correcta">Correcta</label>
+      </div>
+      <div class="col-sm-8">
+        <textarea class="form-control" id="respuesta1" rows="3" th:field="*{texto1Respuesta}"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="respuesta2" class="col-sm-2 col-form-label">Respuesta 2</label>
+      <div class="form-check form-check-inline col-sm-1">
+        <input class="form-check-input" type="radio" name="respuestaCorrecta" id="respuesta2Correcta" th:value="2" th:field="*{respuestaCorrecta}">
+        <label class="form-check-label" for="respuesta2Correcta">Correcta</label>
+      </div>
+      <div class="col-sm-8">
+        <textarea class="form-control" id="respuesta2" rows="3" th:field="*{texto2Respuesta}"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="respuesta3" class="col-sm-2 col-form-label">Respuesta 3</label>
+      <div class="form-check form-check-inline col-sm-1">
+        <input class="form-check-input" type="radio" name="respuestaCorrecta" id="respuesta3Correcta" th:value="3" th:field="*{respuestaCorrecta}">
+        <label class="form-check-label" for="respuesta3Correcta">Correcta</label>
+      </div>
+      <div class="col-sm-8">
+        <textarea class="form-control" id="respuesta3" rows="3" th:field="*{texto3Respuesta}"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="respuesta4" class="col-sm-2 col-form-label">Respuesta 4</label>
+      <div class="form-check form-check-inline col-sm-1">
+        <input class="form-check-input" type="radio" name="respuestaCorrecta" id="respuesta4Correcta" value="4" th:field="*{respuestaCorrecta}">
+        <label class="form-check-label" for="respuesta4Correcta">Correcta</label>
+      </div>
+      <div class="col-sm-8">
+        <textarea class="form-control" id="respuesta4" rows="3" th:field="*{texto4Respuesta}"></textarea>
+      </div>
+    </div>
+
+    <input type="reset" class="btn btn-light btn-lg" value="Limpiar"/>
+    <button id="enviar" type="submit" class="btn btn-primary btn-lg">Guardar</button>
+
+  </form>
+
+
+
+</main>
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="mdlError">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Error</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="txtError">Tienes que seleccionar algún tema.....</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    // <![CDATA[
+    jQuery(document).ready(function () {
+
+        $('.alert').alert();
+        const insertadas = $('#preguntaInsertada').length;
+        if(insertadas > 0) {
+            $('.alert').show();
+        }
+
+        $('#enviar').on('click', function (event) {
+            event.preventDefault();
+
+            let textoError = "";
+
+            const idTema = $('#idTema').val();
+            console.log(idTema);
+            if(idTema == 0) {
+                textoError += 'Tienes que seleccionar al menos 1 tema<br/>';
+            }
+            //las respuestas tienen que tener texto
+            const respuesta1 = $('#respuesta1').val();
+            const respuesta2 = $('#respuesta2').val();
+            const respuesta3 = $('#respuesta3').val();
+            const respuesta4 = $('#respuesta4').val();
+            if( respuesta1.length == 0 || respuesta2.length == 0 || respuesta3.length == 0 || respuesta4.length == 0) {
+                textoError += 'Todas las respuestas tienen que tener texto. <br/>';
+            }
+
+            //al menos una respuesta tiene que ser correcta.
+            let correcta = $('input[name=respuestaCorrecta]:checked', '#nuevaPreguntaForm').val();
+
+            if (correcta == undefined) {
+                textoError += 'Tienes que marcar la respuesta correcta <br/>';
+            }
+
+            if(textoError != "") {
+                let txtError = $('#txtError');
+                txtError.html(textoError);
+                $('#mdlError').modal('show');
+            } else {
+                $('#nuevaPreguntaForm').submit();
+            }
+
+
+        });
+    });
+    // ]]>
+</script>
+
+<div th:insert="~{fragments/footer :: copy}"></div>
+</body>
+</html>

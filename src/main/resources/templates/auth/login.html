@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+   <title>Log In</title>
+  <link rel="stylesheet" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+<body>
+
+<main role="main" class="container mb-3">
+
+<h1>Log In</h1>
+
+<div th:if="${param.error}" class="alert alert-danger" role="alert">Invalid username and password.</div>
+<div th:if="${param.logout}"class="alert alert-success" role="alert">You have been logged out.</div>
+
+
+<form th:action="@{/login}" method="post">
+  <div class="form-group">
+    <label for="username">Email address</label>
+    <input type="text" id="username" name="username" class="form-control" placeholder="Username"/>
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password"  class="form-control"  placeholder="Password"/>
+  </div>
+  <input type="submit" class="btn btn-primary btn-lg" value="Log in" />
+</form>
+
+
+<div class="login-actions d-flex justify-content-end">
+
+  <br>
+  <a class="btn btn-link" th:href="${@environment.getProperty('user.security.forgotPasswordURI')}" th:utext="#{action.forgotPassword}">
+    Forgot Password
+  </a>
+  <br>
+  <a class="btn btn-link" href="../index.html" th:href="@{/}">
+    home
+  </a>
+  <br>
+  <a class="btn btn-light" th:href="${@environment.getProperty('user.security.registrationURI')}" th:utext="#{action.register}">
+    Register
+  </a>
+</div>
+
+</main>
+
+</body>
+</html>
