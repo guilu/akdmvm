@@ -26,6 +26,7 @@
 
 <main role="main" class="container-fluid one-question">
 
+    <!--/*@thymesVar id="contadoresTest" type="com.dbhstudios.akdmvm.domain.dto.ContadoresTest"*/-->
     <form id="formPregunta" th:action="@{/pasaPregunta}" th:object="${contadoresTest}" method="post">
         <input type="hidden" id="txtAciertos" th:field="*{aciertos}"/>
         <input type="hidden" id="txtErrores" th:field="*{errores}"/>

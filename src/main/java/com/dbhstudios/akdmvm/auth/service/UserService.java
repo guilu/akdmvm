@@ -10,7 +10,7 @@ import com.dbhstudios.akdmvm.auth.domain.repository.PasswordResetTokenRepository
 import com.dbhstudios.akdmvm.auth.domain.repository.RoleRepository;
 import com.dbhstudios.akdmvm.auth.domain.repository.UserRepository;
 import com.dbhstudios.akdmvm.auth.domain.repository.VerificationTokenRepository;
-import com.dbhstudios.akdmvm.service.mail.MailService;
+import com.dbhstudios.akdmvm.infraestructure.mail.MailService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -191,7 +191,7 @@ public class FrontEndController {
 
 
     @RequestMapping("/simulacro/{numPreguntasTotales}")
-    public String simulacro(@PathVariable int numPreguntasTotales, Model model, HttpSession session) {
+    public String simulacro(@PathVariable int numPreguntasTotales, Model model, HttpSession session, Principal principal) {
 
         //Es lo mismo que un test, pero los temasSeleccionados son random y las preguntas son totales:
         //50 75 o 100
@@ -201,11 +201,59 @@ public class FrontEndController {
         log.info("Preguntas totales para el simulacro: {}", numPreguntasTotales);
         log.info("Preguntas sacadas: {}", preguntas.size());
 
+        //grabamos el test
+        Test test = new Test(numPreguntasTotales,preguntas.size());
+        test.setPreguntasTest(preguntas);
+
         session.setAttribute("preguntas", preguntas);
+        session.setAttribute("test",test);
+
         model.addAttribute("preguntas", preguntas);
+        model.addAttribute("test", new TestDTO(test));
+
         model.addAttribute("menu", "simulacro");
         model.addAttribute("examenes", this.examenService.getExamenes());
+
         return "simulacro";
+    }
+
+    @PostMapping("simulacro/iniciar")
+    @ResponseBody
+    public String iniciarSimulacro(Model model, HttpSession session, Principal principal){
+        Test test = (Test) session.getAttribute("test");
+        test.setFinalizado(false);
+        test.setAciertos(0);
+        test.setFallos(0);
+
+        //actualiza info de test.
+        log.debug("el test {} {}",test.getId(), test);
+        testService.grabarTest(test,principal.getName());
+
+        return "guardado "+test.getId();
+    }
+
+    @PostMapping("simulacro/resolver")
+    public String resolverSimulacro(@ModelAttribute TestDTO testDTO, Model model, HttpSession session, Principal principal){
+
+        Test test = (Test) session.getAttribute("test");
+        test.setFallos(testDTO.getFallos());
+        test.setAciertos(testDTO.getAciertos());
+        test.setFinalizado(true);
+
+        //actualiza info de test.
+        log.debug("se acabo el simulacro {} {}",test.getId(), test);
+        testService.updateTest(test);
+
+        //nos vamos al inicio.
+        //recuperar información para mostrar en el index
+        // * numero de tests finalizados por el usuario
+        // * media de aciertos
+        // * media de fallos
+        //
+        TestStatsDTO testStats = testService.getStatsFromUsersname(principal.getName());
+        log.info("estadisticas {}", testStats);
+        model.addAttribute("stats", testStats);
+        return "backstage/index";
     }
 
     @RequestMapping("/examen/{id}")

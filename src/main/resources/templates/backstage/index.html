@@ -16,8 +16,8 @@
 <h1>Stats</h1>
 
 <h2>Tests hechos: <span th:text="${stats.testFinalizados}">N</span></h2>
-<h2>Media Aciertos: <span th:text="${stats.mediaAciertos}">0%</span></h2>
-<h2>Media Fallos: <span th:text="${stats.mediaFallos}">0%</span></h2>
+<h2>Media Aciertos: <span th:text="${#numbers.formatDecimal(stats.mediaAciertos,2,'POINT',2,'COMMA')}+'%'">0%</span></h2>
+<h2>Media Fallos: <span th:text="${#numbers.formatDecimal(stats.mediaFallos,2,'POINT',2,'COMMA')}+'%'">0%</span></h2>
 <h2></h2>
 
 </body>

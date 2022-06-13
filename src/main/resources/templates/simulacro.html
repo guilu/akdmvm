@@ -13,7 +13,7 @@
 </div>
 <main role="main" class="container-fluid container-fluid-simulacro">
 
-    <input  type="hidden" id="numPreguntasTotales" th:value="${not #lists.isEmpty(preguntas) ? preguntas.size() : '0'}" />
+    <input type="hidden" id="numPreguntasTotales" th:value="${not #lists.isEmpty(preguntas) ? preguntas.size() : '0'}" />
     <input type="hidden" id="txtAciertos"/>
     <input type="hidden" id="txtErrores"/>
     <input type="hidden" id="segundosPorPregunta" th:value="${@environment.getProperty('simulacro.segundos-por-pregunta')}"/>
@@ -25,7 +25,35 @@
         </th:block>
 
         <p class="my-5"></p>
+
+    <!--/*@thymesVar id="test" type="com.dbhstudios.akdmvm.domain.dto.TestDTO"*/-->
+    <form th:action="@{/simulacro/resolver}" id="testDTO" th:object="${test}" th:method="post">
+        <input type="hidden" th:name="terminado" id="terminado" th:value="*{terminado}">
+        <input type="hidden" th:name="aciertos" id="aciertos" th:value="*{aciertos}">
+        <input type="hidden" th:name="fallos" id="fallos" th:value="*{fallos}">
+    </form>
 </main>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="mdlInicio">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Vamos a iniciar el simulacro.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-muted">
+                <h5>Lee atentamente las preguntas y marca la respuesta correcta.</h5>
+                <h6>Vamos a grabar el test, para las estadísticas.</h6>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" id="button-iniciar-simulacro">Iniciar Simulacro</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="modal" tabindex="-1" role="dialog" id="mdlResultado">
@@ -59,19 +87,34 @@
 
         const reloj = $('#clock');
         const botonCorregir = $('#button-corregir-simulacro');
+        const botonFinalizar = $('#button-finalizar-simulacro');
+        const botonIniciar = $('#button-iniciar-simulacro');
         botonCorregir.show();
+
         $('#admin-button-nav').hide();
 
 
         // un minuto por cada pregunta....
         const segundosPorPregunta = $('#segundosPorPregunta').val() * 1000;
         const milisegundos = $('#numPreguntasTotales').val() * segundosPorPregunta;
-        Simulacro.cuentaAtras(reloj,milisegundos);
+
 
         botonCorregir.on('click', function () {
             Simulacro.resolver();
         });
 
+        botonFinalizar.on('click', function (){
+            $('#testDTO').submit();
+        });
+
+        $('#mdlInicio').modal('show');
+
+        botonIniciar.on('click', function (data){
+            var data = $('#testDTO').serialize();
+            $.post("iniciar", function( data ) {
+                Simulacro.cuentaAtras(reloj,milisegundos)
+            });
+        });
 
     });
     // ]]>

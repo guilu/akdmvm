@@ -1,4 +1,4 @@
-package com.dbhstudios.akdmvm.service.mail;
+package com.dbhstudios.akdmvm.infraestructure.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

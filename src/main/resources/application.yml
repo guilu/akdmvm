@@ -28,7 +28,7 @@ user:
     protectedURIs: /backstage
     unprotectedURIs: /,/index,/searched,/buscar,/favicon.ico,/webfonts/**/*,/css/**/*,/js/**/*,/img/**/*,/register,/auth/registration,/auth/registrationConfirm,/forgot-password,/sendRegistrationToken,/resetPassword,/changePassword,/savePassword,/oauth/**
 
-    disableCSRFdURIs: /no-csrf-test
+    disableCSRFdURIs: /simulacro/iniciar
 
     loginURI: /login
     loginSuccessURI: /?messageKey=message.loginSuccess
@@ -48,7 +48,7 @@ user:
     updateUserURI: /update-user
 
   registration:
-    sendVerificationEmail: true
+    sendVerificationEmail: false
 
   mail:
     fromAddress: academivm.com

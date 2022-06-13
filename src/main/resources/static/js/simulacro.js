@@ -115,6 +115,10 @@ const Simulacro = (function () {
             	porcentaje = 0;
             }
 
+            //iformamos el testDTO
+            $('#aciertos').val(aciertos)
+            $('#fallos').val(errores+blancos);
+            $('#terminado').val('true');
 
             const notaFinal = parseFloat(nota).toFixed(2);
             $('#notaFinal').text(notaFinal);

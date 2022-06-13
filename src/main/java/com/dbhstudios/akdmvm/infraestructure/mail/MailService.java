@@ -1,4 +1,4 @@
-package com.dbhstudios.akdmvm.service.mail;
+package com.dbhstudios.akdmvm.infraestructure.mail;
 
 
 import lombok.extern.log4j.Log4j2;
