@@ -38,16 +38,21 @@ INSERT INTO BDD_AKDMVM.tb02_tema  VALUES (1,'Constitución Española',1),
 (10,'Hacienda Pública y Administración Tributaria',1);
 
 
-INSERT INTO BDD_AKDMVM.tb03_pregunta(ID,TEXTO,TEMA_ID,EXAMEN_ID) VALUES (1,'¿Qué Artículo de la Constitución está dedicado a la irretroactividad de las disposiciones  desfavorables o restrictivas de derechos individuales?',1,NULL),
-(2,'Según el Artículo 1.2 de la Constitución Española, ¿De dónde emanan los poderes del Estado?',1,NULL),
-(3,'¿Cómo se denomina el Título Preliminar de la C.E?',1,NULL),
-(4,'¿Por qué no están constituidas las fuerzas armadas?',1,NULL),
-(5,'Las bases de la organización militar se regulará conforme a los principios previstos en:',1,NULL),
-(6,'Según la Constitución Española de 1978, las banderas y enseñas propias de las Comunidades Autónomas: (Comunidad de Madrid, 2014)',1,NULL),
-(7,'La solidaridad entre las autonomías de las nacionalidades  y  regiones  que integran  la  nación española es  un derecho  que:',1,NULL),
-(8,'Según el Artículo 1 de la Constitución Española,  la  forma  política del  Estado  español es: (Comunidad  de Madrid,  2014)',1,NULL),
-(9,'Según la Constitución;  ¿Que  se  fundamenta en  la  indisoluble unidad de  la nación  española?',1,NULL),
-(10,'¿Quién está sujeto a la Constitución y al resto del ordenamiento jurídico?',1,NULL);
+INSERT INTO BDD_AKDMVM.tb05_examen VALUES (1,'Ayto. Valencia 2018 - Bombero'),
+                                          (2,'Cons. Valencia 2019 - Bombero'),
+                                          (3,'Ayto. Alicante 2020 - Oficial Específico'),
+                                          (4,'Ayto. Alicante 2020 - Oficial Legislación');
+
+INSERT INTO BDD_AKDMVM.tb03_pregunta(ID,TEXTO,TEMA_ID,EXAMEN_ID) VALUES (1,'¿Qué Artículo de la Constitución está dedicado a la irretroactividad de las disposiciones  desfavorables o restrictivas de derechos individuales?',1,1),
+(2,'Según el Artículo 1.2 de la Constitución Española, ¿De dónde emanan los poderes del Estado?',1,1),
+(3,'¿Cómo se denomina el Título Preliminar de la C.E?',1,1),
+(4,'¿Por qué no están constituidas las fuerzas armadas?',1,2),
+(5,'Las bases de la organización militar se regulará conforme a los principios previstos en:',1,2),
+(6,'Según la Constitución Española de 1978, las banderas y enseñas propias de las Comunidades Autónomas: (Comunidad de Madrid, 2014)',1,2),
+(7,'La solidaridad entre las autonomías de las nacionalidades  y  regiones  que integran  la  nación española es  un derecho  que:',1,3),
+(8,'Según el Artículo 1 de la Constitución Española,  la  forma  política del  Estado  español es: (Comunidad  de Madrid,  2014)',1,3),
+(9,'Según la Constitución;  ¿Que  se  fundamenta en  la  indisoluble unidad de  la nación  española?',1,3),
+(10,'¿Quién está sujeto a la Constitución y al resto del ordenamiento jurídico?',1,3);
 
 
 INSERT INTO BDD_AKDMVM.tb04_respuesta(ID,CORRECTA,TEXTO,PREGUNTA_ID)  VALUES (1,false,'Artículo 9.2',1),

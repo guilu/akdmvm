@@ -55,17 +55,18 @@
 
             <a class="btn btn-primary mr-2" href="#" id="button-corregir-simulacro" role="button" style="display: none">Corregir »</a>
             <a class="btn btn-info mr-2" id="button-finalizar-simulacro" role="button" style="display: none">Finalizar »</a>
-            <span class="navbar-text px-3 rounded bg-purple " id="menu-reloj" style="display: none">
+            <span class="navbar-text px-3 rounded bg-purple mr-3" id="menu-reloj" style="display: none">
                 <i class="fa fa-clock"></i> <span id="clock"></span>
             </span>
         </div>
 
-        <form class="form-inline my-2 my-md-0" method="post" th:action="@{/buscar}" th:if="${menu != 'simulacro' and menu != 'examenes'}">
+        <form class="form-inline my-2 my-md-0 mr-3" method="post" th:action="@{/buscar}" th:if="${menu != 'simulacro' and menu != 'examenes'}">
             <label>
                 <input class="form-control" type="text" placeholder="Buscar..." th:name="textoABuscar" />
             </label>
         </form>
         <div class="form-inline">
+            <img alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="img-thumbnail rounded-circle" width="48px" height="48px">
             <ul class="navbar-nav mr-2" id="admin-button-user">
                 <li class="nav-item dropdown mx-auto" th:classappend="${ (menu == 'new-pregunta' || menu == 'new-tema') ? 'active' : '' }">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authentication="name">

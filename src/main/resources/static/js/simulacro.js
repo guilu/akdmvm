@@ -72,6 +72,7 @@ const Simulacro = (function () {
                 var ok = false;
                 //cada pregunta coger las soluciones
                 var preguntas = $('.pregunta-body');
+
                 //para cada pregunta contar si es acierto fallo o blanco....
                 preguntas.each( function () {
                     var soluciones = $(this).find('.solucion');
@@ -102,6 +103,13 @@ const Simulacro = (function () {
                 });
 
 
+            //Cada 3 errores quita un acierto.
+            //
+            //               Errores
+            // ( aciertos - ----------   ) * 10
+            //                  3
+            // ---------------------------------
+            //       numPreguntasTotales
             let nota;
             if( aciertos < (errores/3) ) {
                 nota = 0;

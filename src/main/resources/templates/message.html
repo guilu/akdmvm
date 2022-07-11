@@ -1,21 +1,24 @@
-<!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
-<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
-  <title>Firefight</title>
-  <link rel="stylesheet" href="../static/css/app.css" th:href="@{/css/app.css}"/>
-</head>
-<body class="bg-light">
-<div th:replace="~{fragments/nav :: nav}" th:width="examenes=${examenes}"></div>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
+<head th:replace="fragments/base :: common_header(~{::title},~{::link})">
+  <title>A·K·D·M·V·M Backstage</title>
+  <link rel="stylesheet" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
+</head>
+
+<body class="bg-light backstage">
+
+<div th:replace="~{fragments/nav :: nav}"></div>
 
 <main role="main" class="container-fluid my-5">
 
 
-  <div class="alert alert-danger" role="alert">
+  <div class="alert alert-danger m-3" role="alert">
     <span th:text="${message}">Aqui pintaria el mensaje. </span> <a href="#" class="alert-link" th:href="@{/temas-seleccion}"> Vuelve a los temas </a>
   </div>
-
-
 </main>
+
 </body>
 </html>

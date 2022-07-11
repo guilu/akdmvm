@@ -276,10 +276,19 @@ public class FrontEndController {
         log.info("Preguntas totales para el examen: {}", examen.isPresent() ? examen.get().getTexto() : "vacio");
         log.info("Preguntas sacadas: {}", preguntas.size());
 
+        //grabamos el test
+        Test test = new Test(preguntas.size(),preguntas.size());
+        test.setPreguntasTest(preguntas);
+
         session.setAttribute("preguntas", preguntas);
+        session.setAttribute("test",test);
+
         model.addAttribute("preguntas", preguntas);
+        model.addAttribute("test", new TestDTO(test));
+
         model.addAttribute("menu", "examenes");
         model.addAttribute("examenes", this.examenService.getExamenes());
+
         return "simulacro";
     }
 

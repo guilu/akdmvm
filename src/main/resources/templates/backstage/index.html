@@ -8,10 +8,10 @@
   <link rel="stylesheet" href="../../static/css/app.css" th:href="@{/css/app.css}"/>
 </head>
 
-<div th:replace="~{fragments/nav :: nav}"></div>
-
 <!--/*@thymesVar id="stats" type="com.dbhstudios.akdmvm.domain.dto.TestStatsDTO"*/-->
 <body sec:authorize="isAuthenticated()" class="backstage" th:with="stats=${stats}">
+
+<div th:replace="~{fragments/nav :: nav}"></div>
 
 <h1>Stats</h1>
 

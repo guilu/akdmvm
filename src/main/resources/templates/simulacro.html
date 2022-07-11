@@ -39,17 +39,17 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Vamos a iniciar el simulacro.</h5>
+                <h5 class="modal-title">Vamos a iniciar el Test.</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body text-muted">
                 <h5>Lee atentamente las preguntas y marca la respuesta correcta.</h5>
-                <h6>Vamos a grabar el test, para las estadísticas.</h6>
+                <h6 class="text-purple">Se van a grabar los resultados para las estadísticas.</h6>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal" id="button-iniciar-simulacro">Iniciar Simulacro</button>
+                <button class="btn btn-primary" data-dismiss="modal" id="button-iniciar-simulacro">Iniciar Test</button>
             </div>
         </div>
     </div>
@@ -111,7 +111,7 @@
 
         botonIniciar.on('click', function (data){
             var data = $('#testDTO').serialize();
-            $.post("iniciar", function( data ) {
+            $.post("/simulacro/iniciar", function( data ) {
                 Simulacro.cuentaAtras(reloj,milisegundos)
             });
         });

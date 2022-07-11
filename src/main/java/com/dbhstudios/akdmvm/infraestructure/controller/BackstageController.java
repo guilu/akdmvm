@@ -1,5 +1,6 @@
 package com.dbhstudios.akdmvm.infraestructure.controller;
 
+import com.dbhstudios.akdmvm.application.service.ExamenService;
 import com.dbhstudios.akdmvm.application.service.TestService;
 import com.dbhstudios.akdmvm.domain.dto.TestStatsDTO;
 import com.dbhstudios.akdmvm.domain.entity.model.Test;
@@ -16,10 +17,12 @@ public class BackstageController {
 
 
     private TestService testService;
+    private ExamenService examenService;
 
 
-    public BackstageController(TestService testService){
+    public BackstageController(TestService testService, ExamenService examenService){
         this.testService = testService;
+        this.examenService = examenService;
     }
 
     @RequestMapping(value= {"/",""})
@@ -32,7 +35,7 @@ public class BackstageController {
         //
         TestStatsDTO testStats = testService.getStatsFromUsersname(principal.getName());
         model.addAttribute("stats", testStats);
-
+        model.addAttribute("examenes", this.examenService.getExamenes());
 
         return "backstage/index";
     }

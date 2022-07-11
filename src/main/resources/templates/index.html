@@ -12,7 +12,7 @@
 <div class="d-flex justify-content-between">
 
     <div class="brand">
-        <H1>AKDMVM</H1>
+        <H1><i class="fa fa-fire-alt"></i> AKDMVM</H1>
     </div>
 
     <div class="botones d-flex align-items-center" sec:authorize="!isAuthenticated()">
@@ -21,14 +21,28 @@
     </div>
 
     <div class="botones d-flex align-items-center" sec:authorize="isAuthenticated()">
-        <a sec:authentication="name" class="btn btn-link" th:href="@{/profile}"></a>
+        <img alt="" src="data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" class="mr-2 img-thumbnail rounded-circle" width="48px" height="48px">
+        <ul class="navbar-nav mr-2" id="admin-button-user">
+            <li class="nav-item dropdown mx-auto" >
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUser" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span sec:authentication="name">Usuario</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="../../auth/profile.html" th:href="@{/profile}">Perfil</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/logout}">Log Out</a>
+                    <!-- <div class="dropdown-divider"></div> -->
+                    <!-- <a class="dropdown-item" href="../delete-agrupacion.html" th:href="@{/delete-agrupacion}" th:classappend="${menu == 'delete-agrupacion' ? 'active' : ''}">Borrar Agrupacion</a> -->
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
 
-<div class="position-relative overflow-hidden p-3 p-md-0 text-center bg-light mb-3">
+<div class="position-relative overflow-hidden p-3 p-md-0 text-center bg-light mb-3 mt-3">
     <div class="col-lg-8 col-md-8 p-lg-1 mx-auto my-0">
-        <h1 class="display-4 font-weight-normal"><i class="fa fa-fire-alt fa-2x"></i> Prepara tus Tests</h1>
-        <p class="lead font-weight-normal">Prepara tus oposiciones con  tests y simulacros de examen.... también puedes hacer exámenes oficiales de otros años, buscar y repasar todos los conceptos.</p>
+        <h1 class="display-4 font-weight-normal">Prepara tu examen</h1>
+        <p class="lead font-weight-normal">Prepara tus oposiciones con  tests y simulacros de examen.... también puedes hacer exámenes que tengas guardados, buscar y repasar todos los conceptos.</p>
     </div>
 </div>
 
@@ -43,7 +57,7 @@
                             <i class="fa fa-vial fa-5x logo-test"></i><h1>Tests</h1>
                         </div>
                         <div class="card-body text-center">
-                            <p class="card-text">Selecciona los temas de todo el contenido y realiza un test pregunta a pregunta indicando cuantas preguntas quieres en total.</p>
+                            <p class="card-text">Selecciona temas, realiza tests pregunta a pregunta. Indicando cuantas preguntas quieres en total.</p>
                             <div class="d-flex justify-content-center align-items-center">
                             </div>
                         </div>
@@ -55,17 +69,17 @@
                             <i class="far fa-clipboard fa-5x logo-simulacro"></i><h1 class="texto-simulacro">Simulacros</h1>
                         </div>
                         <div class="card-body text-center">
-                            <p class="card-text">Realiza un simulacro de examen con 50, 75 o 100 preguntas random de todo el temario y un cronómetro que te marcará el tiempo. </p>
+                            <p class="card-text">Realiza un simulacro de examen con 50, 75 o 100 preguntas random. Un cronómetro que te marcará el tiempo. </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="home-card mb-4 shadow-sm">
                         <div class="bd-placeholder-img card-img-top py-5 text-center caja-examenes">
-                            <i class="far fa-building fa-5x logo-examenes"></i><h1 class="texto-examanes">Examenes Oficial</h1>
+                            <i class="far fa-building fa-5x logo-examenes"></i><h1 class="texto-examanes">Examen Oficial</h1>
                         </div>
                         <div class="card-body text-center">
-                            <p class="card-text">Practica con los exámenes oficiales de otras convocatorias, preguntas que ya han salido y que pueden volver a caer.</p>
+                            <p class="card-text">Practica con los exámenes oficiales de otras convocatorias, preguntas que ya han salido y que pueden "volver a caer".</p>
                         </div>
                     </div>
                 </div>
@@ -73,8 +87,8 @@
         </div>
     </div>
 
-    <div sec:authorize="!isAuthenticated()" class="d-flex justify-content-center"><a th:href="@{/register}" class="btn btn-secondary btn-lg">Suscribte Ahora</a></div>
-    <div sec:authorize="isAuthenticated()" class="d-flex justify-content-center"><a th:href="@{/backstage}" class="btn btn-primary btn-lg">Accede a la Aplicación</a></div>
+    <div sec:authorize="!isAuthenticated()" class="d-flex justify-content-center m-4"><a th:href="@{/register}" class="btn btn-primary btn-lg">Suscribte Ahora</a></div>
+    <div sec:authorize="isAuthenticated()" class="d-flex justify-content-center m-4"><a th:href="@{/backstage}" class="btn btn-primary btn-lg">Accede a la Aplicación</a></div>
 
 </main>
 
