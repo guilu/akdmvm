@@ -102,7 +102,7 @@ const Simulacro = (function () {
                     }
                 });
 
-
+            console.log("aciertos:"+aciertos+",errores:"+errores+",blancos:"+blancos);
             //Cada 3 errores quita un acierto.
             //
             //               Errores
@@ -111,11 +111,20 @@ const Simulacro = (function () {
             // ---------------------------------
             //       numPreguntasTotales
             let nota;
+            /*
             if( aciertos < (errores/3) ) {
                 nota = 0;
             } else {
                 nota = ((aciertos - (errores/3)) * 10 )/ $('#numPreguntasTotales').val();
             }
+            */
+            //NUEVA PUNTUACIÓN:
+            // PUNTUACIÓN SOBRE 10 ----> (aciertos * 10 ) / preguntas;
+            // cada pregunta errónea resta 0,5
+            // cada pregunta no contestada resta 0,25
+
+            nota = ((aciertos * 10 ) / $('#numPreguntasTotales').val()) -  (errores * 0.5)  - (blancos * 0.25)
+            if (nota < 0) nota = 0;
 
             //Porcentaje de acierto de lo contestado (se entiende)....
             let porcentaje = parseFloat( (aciertos / (aciertos + errores) * 100)).toFixed(2);
@@ -137,8 +146,8 @@ const Simulacro = (function () {
                 $('#notaFinal').addClass("bg-red");
             }
 
-            $('#txtResultado').text(aciertos + ' aciertos ' + errores + ' errores. ' + blancos + ' en blanco.');
-            $('#txtPorcentaje').text('Porcentaje de acierto: ' + porcentaje + '%');
+            $('#txtResultado').text(aciertos + ' aciertos, ' + errores + ' errores y ' + blancos + ' en blanco.');
+            $('#txtPorcentaje').text('Acierto: ' + porcentaje + '%');
             $('#porcentajeAciertos').css('width', porcentaje + '%');
             $('#mdlResultado').modal('show');
 

@@ -333,3 +333,7 @@ html {
   height: 45px;
   cursor:pointer;
 }
+
+#notaFinal {
+  font-size: 1.5rem;
+}
