@@ -2,7 +2,7 @@ package com.dbhstudios.akdmvm.infraestructure.event.listener;
 
 
 import com.dbhstudios.akdmvm.infraestructure.event.OnRegistrationCompleteEvent;
-import com.dbhstudios.akdmvm.auth.service.UserService;
+import com.dbhstudios.akdmvm.application.service.auth.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

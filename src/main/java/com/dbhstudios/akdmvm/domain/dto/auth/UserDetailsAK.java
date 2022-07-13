@@ -1,6 +1,6 @@
 package com.dbhstudios.akdmvm.domain.dto.auth;
 
-import com.dbhstudios.akdmvm.auth.domain.model.User;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

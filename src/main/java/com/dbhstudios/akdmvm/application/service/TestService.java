@@ -1,7 +1,7 @@
 package com.dbhstudios.akdmvm.application.service;
 
-import com.dbhstudios.akdmvm.auth.domain.model.User;
-import com.dbhstudios.akdmvm.auth.service.UserService;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
+import com.dbhstudios.akdmvm.application.service.auth.UserService;
 import com.dbhstudios.akdmvm.domain.dto.ContadoresTest;
 import com.dbhstudios.akdmvm.domain.dto.TemasSeleccionados;
 import com.dbhstudios.akdmvm.domain.dto.TestStatsDTO;
@@ -77,9 +77,11 @@ public class TestService {
         return agrupacionService.getAgrupacionesAlphabetically();
     }
 
-    public void grabarTest(Test test, String username) {
+    public void  grabarTest(Test test, String username) {
         User user = this.userService.findUserByEmail(username);
         test.setUser(user);
+        log.debug("print del test antes de guardar: {}", test);
+        log.debug("guardando test para usuario {}", user.getEmail());
         this.testRespository.save(test);
     }
 
@@ -96,7 +98,7 @@ public class TestService {
     }
 
 
-    public TestStatsDTO getStatsFromUsersname(String usermail){
+    public TestStatsDTO getStatsFromUsername(String usermail){
 
         User user = userService.findUserByEmail(usermail);
 

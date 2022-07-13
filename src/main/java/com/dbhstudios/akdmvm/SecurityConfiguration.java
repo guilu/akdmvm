@@ -1,9 +1,9 @@
 package com.dbhstudios.akdmvm;
 
-import com.dbhstudios.akdmvm.auth.domain.repository.UserRepository;
-import com.dbhstudios.akdmvm.auth.service.LoginAttemptService;
-import com.dbhstudios.akdmvm.auth.service.LogoutSuccessService;
-import com.dbhstudios.akdmvm.auth.service.UserDetailsServiceAK;
+import com.dbhstudios.akdmvm.domain.respository.auth.UserRepository;
+import com.dbhstudios.akdmvm.application.service.auth.LoginAttemptService;
+import com.dbhstudios.akdmvm.application.service.auth.LogoutSuccessService;
+import com.dbhstudios.akdmvm.application.service.auth.UserDetailsServiceAK;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -14,8 +14,11 @@ spring:
     hibernate:
       ddl-auto: create-drop #change to validate in production mode
     show-sql: false
-    database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
+    properties:
+      hibernate:
+        default_schema: 'BDD_AKDMVM'
+        dialect: org.hibernate.dialect.H2Dialect
 
   thymeleaf:
     cache: false

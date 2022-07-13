@@ -1,4 +1,4 @@
-package com.dbhstudios.akdmvm.auth.service;
+package com.dbhstudios.akdmvm.application.service.auth;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

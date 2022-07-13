@@ -1,17 +1,14 @@
-package com.dbhstudios.akdmvm.auth.domain.model;
+package com.dbhstudios.akdmvm.domain.entity.auth;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
-import lombok.Getter;
-import lombok.Setter;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
-@Getter
-@Setter
-@Entity(name = "PasswordResetToken")
-@Table(schema = "BDD_AKDMVM", name = "TB00_RESET_TOKEN")
+@Entity
+@Table(name = DomainModelNames.TB00_PASSWORD_RESET_TOKEN)
 public class PasswordResetToken extends BaseEntity {
 
     /**
@@ -78,6 +75,30 @@ public class PasswordResetToken extends BaseEntity {
         cal.setTimeInMillis(new Date().getTime());
         cal.add(Calendar.MINUTE, expiryTimeInMinutes);
         return new Date(cal.getTime().getTime());
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     /**

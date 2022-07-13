@@ -1,7 +1,7 @@
-package com.dbhstudios.akdmvm.auth.domain.model;
+package com.dbhstudios.akdmvm.domain.entity.auth;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
-import com.dbhstudios.akdmvm.domain.entity.model.Tema;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 import com.dbhstudios.akdmvm.domain.entity.model.Test;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-@Entity(name = "User")
+@Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(schema = "BDD_AKDMVM", name = "TB00_USER")
+@Table(name = DomainModelNames.TB00_USER)
 public class User extends BaseEntity {
     /**
      * The first name.
@@ -82,8 +78,7 @@ public class User extends BaseEntity {
      * The roles.
      */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "TB00_USER_ROLE",
-            schema = "BDD_AKDMVM",
+    @JoinTable(name = DomainModelNames.TB00_USER_ROLE,
             joinColumns = @JoinColumn(name = "ID_USER", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "ID_ROLE", referencedColumnName = "id"))
     private Collection<Role> roles;
@@ -112,5 +107,94 @@ public class User extends BaseEntity {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
+    }
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public Date getLastActivityDate() {
+        return lastActivityDate;
+    }
+
+    public void setLastActivityDate(Date lastActivityDate) {
+        this.lastActivityDate = lastActivityDate;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
+    public List<Test> getTests() {
+        return tests;
+    }
+
+    public void setTests(List<Test> tests) {
+        this.tests = tests;
     }
 }

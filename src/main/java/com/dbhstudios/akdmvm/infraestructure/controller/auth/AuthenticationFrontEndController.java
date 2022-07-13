@@ -1,8 +1,8 @@
-package com.dbhstudios.akdmvm.auth.infraestructure.controller;
+package com.dbhstudios.akdmvm.infraestructure.controller.auth;
 
 import com.dbhstudios.akdmvm.domain.dto.auth.UserDTO;
 import com.dbhstudios.akdmvm.domain.dto.auth.UserDetailsAK;
-import com.dbhstudios.akdmvm.auth.domain.model.User;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

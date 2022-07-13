@@ -15,7 +15,10 @@ public class HttpUtils {
     public static String getClientIP(HttpServletRequest request) {
         String ip = null;
 
-        log.debug("Recibida request: {}", request.getRemoteAddr());
+        if (request != null) {
+            log.debug("Recibida request: {}", request.getRemoteAddr());
+        }
+
 
         final String xfHeader = request.getHeader("X-Forwarded-For");
         if (xfHeader != null) {

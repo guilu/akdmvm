@@ -1,7 +1,7 @@
 package com.dbhstudios.akdmvm.infraestructure.job;
 
-import com.dbhstudios.akdmvm.auth.domain.repository.PasswordResetTokenRepository;
-import com.dbhstudios.akdmvm.auth.domain.repository.VerificationTokenRepository;
+import com.dbhstudios.akdmvm.domain.respository.auth.PasswordResetTokenRepository;
+import com.dbhstudios.akdmvm.domain.respository.auth.VerificationTokenRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

@@ -1,12 +1,12 @@
 package com.dbhstudios.akdmvm.domain.entity.model;
 
 
-import com.dbhstudios.akdmvm.auth.domain.model.User;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -15,9 +15,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@Entity(name = "Test")
+@Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(schema = "BDD_AKDMVM", name = "TB06_TEST")
+@Table(name = DomainModelNames.TB06_TEST)
 public class Test extends BaseEntity {
 
     private boolean finalizado;
@@ -50,14 +50,12 @@ public class Test extends BaseEntity {
         if (preguntas == null ){
             return;
         }
-        List<PreguntaTest> preguntasTest = new ArrayList<>();
+        this.preguntas = new ArrayList<>();
         for (Pregunta pregunta: preguntas) {
             PreguntaTest preguntaTest = new PreguntaTest(pregunta);
             preguntaTest.setTest(this);
-            preguntasTest.add(preguntaTest);
-
+            this.preguntas.add(preguntaTest);
         }
-        this.setPreguntas(preguntasTest);
     }
 
     public void setUser(User user) {
@@ -66,5 +64,16 @@ public class Test extends BaseEntity {
 
     public String toString(){
         return "A:"+this.getAciertos()+" F:"+this.getFallos()+" PxT:"+this.getNumeroPreguntasXTema()+" PT:"+this.getNumeroPreguntasTotal();
+    }
+
+    public String toJson() {
+
+        StringBuffer test = new StringBuffer();
+
+        for (PreguntaTest pregunta : preguntas) {
+            test.append(pregunta.toString());
+        }
+        return test.toString();
+
     }
 }

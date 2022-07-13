@@ -1,13 +1,14 @@
 package com.dbhstudios.akdmvm.domain.entity.model;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "TB05_EXAMEN", schema = "BDD_AKDMVM")
+@Table(name = DomainModelNames.TB02_EXAMEN)
 public class Examen extends BaseEntity {
 	
 	private static final long serialVersionUID = 1L;

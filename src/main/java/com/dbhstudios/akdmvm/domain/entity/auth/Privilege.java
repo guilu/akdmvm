@@ -1,6 +1,7 @@
-package com.dbhstudios.akdmvm.auth.domain.model;
+package com.dbhstudios.akdmvm.domain.entity.auth;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,8 +12,8 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@Entity(name = "Privilege")
-@Table(schema = "BDD_AKDMVM", name = "TB00_PRIVILEGE")
+@Entity
+@Table(name = DomainModelNames.TB00_PRIVILEGE)
 public class Privilege extends BaseEntity {
     /**
      * The name.

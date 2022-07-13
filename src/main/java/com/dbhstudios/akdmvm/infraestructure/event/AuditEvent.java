@@ -1,6 +1,6 @@
 package com.dbhstudios.akdmvm.infraestructure.event;
 
-import com.dbhstudios.akdmvm.auth.domain.model.User;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;

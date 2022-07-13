@@ -1,6 +1,7 @@
 package com.dbhstudios.akdmvm.domain.entity.model;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Table(name = "TB03_PREGUNTA", schema = "BDD_AKDMVM")
+@Table(name = DomainModelNames.TB04_PREGUNTA)
 public class Pregunta extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -69,5 +70,13 @@ public class Pregunta extends BaseEntity {
 
 	public void setExamen(Examen examen) {
 		this.examen = examen;
+	}
+
+	public String toString(){
+		String json = " Pregunta:"+this.getId() + ", Tema:"+this.getTema().getId();
+		for(Respuesta respuesta: respuestas){
+			json += respuesta.toString();
+		}
+		return "{" + json + "}";
 	}
 }

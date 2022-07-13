@@ -1,6 +1,7 @@
-package com.dbhstudios.akdmvm.auth.domain.model;
+package com.dbhstudios.akdmvm.domain.entity.auth;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,9 +11,9 @@ import java.util.Collection;
 
 @Getter
 @Setter
-@Entity(name = "Role")
+@Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(schema = "BDD_AKDMVM", name = "TB00_ROLE")
+@Table(name = DomainModelNames.TB00_ROLE)
 public class Role extends BaseEntity {
     /**
      * The users.
@@ -24,8 +25,7 @@ public class Role extends BaseEntity {
      * The privileges.
      */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "TB00_ROLE_PRIVILEGE",
-            schema = "BDD_AKDMVM",
+    @JoinTable(name = DomainModelNames.TB00_ROLE_PRIVILEGE,
             joinColumns = @JoinColumn(name = "ID_ROLE", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "ID_PRIVILEGE", referencedColumnName = "id")
     )

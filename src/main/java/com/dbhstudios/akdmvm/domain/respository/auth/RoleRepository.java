@@ -1,6 +1,6 @@
-package com.dbhstudios.akdmvm.auth.domain.repository;
+package com.dbhstudios.akdmvm.domain.respository.auth;
 
-import com.dbhstudios.akdmvm.auth.domain.model.Role;
+import com.dbhstudios.akdmvm.domain.entity.auth.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {

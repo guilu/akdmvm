@@ -1,6 +1,7 @@
 package com.dbhstudios.akdmvm.domain.entity.model;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-@Table(name = "TB02_TEMA", schema = "BDD_AKDMVM")
+@Table(name = DomainModelNames.TB03_TEMA)
 public class Tema extends BaseEntity {
 
     private static final Logger LOG = LoggerFactory.getLogger(Tema.class);

@@ -1,4 +1,4 @@
-package com.dbhstudios.akdmvm.auth.infraestructure.controller;
+package com.dbhstudios.akdmvm.infraestructure.controller.auth;
 
 import com.dbhstudios.akdmvm.domain.dto.auth.PasswordDTO;
 import com.dbhstudios.akdmvm.domain.dto.auth.UserDTO;
@@ -7,8 +7,8 @@ import com.dbhstudios.akdmvm.infraestructure.event.AuditEvent;
 import com.dbhstudios.akdmvm.infraestructure.event.OnRegistrationCompleteEvent;
 import com.dbhstudios.akdmvm.infraestructure.auth.InvalidOldPasswordException;
 import com.dbhstudios.akdmvm.infraestructure.auth.UserAlreadyExistsException;
-import com.dbhstudios.akdmvm.auth.domain.model.User;
-import com.dbhstudios.akdmvm.auth.service.UserService;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
+import com.dbhstudios.akdmvm.application.service.auth.UserService;
 import com.dbhstudios.akdmvm.util.HttpUtils;
 import com.dbhstudios.akdmvm.util.JSONResponse;
 import lombok.extern.log4j.Log4j2;

@@ -1,9 +1,9 @@
-package com.dbhstudios.akdmvm.auth.service;
+package com.dbhstudios.akdmvm.application.service.auth;
 
 
 import com.dbhstudios.akdmvm.domain.dto.auth.UserDetailsAK;
 import com.dbhstudios.akdmvm.infraestructure.event.AuditEvent;
-import com.dbhstudios.akdmvm.auth.domain.model.User;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
 import com.dbhstudios.akdmvm.util.HttpUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;

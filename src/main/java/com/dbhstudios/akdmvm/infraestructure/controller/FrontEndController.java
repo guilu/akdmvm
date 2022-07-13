@@ -85,8 +85,14 @@ public class FrontEndController {
         model.addAttribute("preguntas", preguntas);
         model.addAttribute("menu", "temas-seleccion");
 
-        //grabamos el test en bbdd
-        testService.grabarTest(test,principal.getName());
+        try {
+            //grabamos el test en bbdd
+            testService.grabarTest(test, principal.getName());
+        } catch (Exception exception) {
+            log.error("No he podido grabar el test {}",test);
+            log.error("Ha ocurrido la siguiente excepcion {}", exception.getMessage());
+            log.error("todo el test: {}", test.toJson());
+        }
 
         session.setAttribute("preguntasFalladas", new ArrayList<>());
         session.setAttribute("contadoresTest", contadoresTest);
@@ -149,8 +155,15 @@ public class FrontEndController {
                 //llenamos el objeto Test para guardar el resultado final.
                 test = new Test(contadoresTest.getNumPreguntasPorTemas(),preguntasFalladas.size());
                 test.setPreguntasTest(preguntasFalladas);
-                //grabamos el test en bbdd
-                testService.grabarTest(test,principal.getName());
+
+                try {
+                    //grabamos el test en bbdd
+                    testService.grabarTest(test, principal.getName());
+                } catch (Exception exception) {
+                    log.error("No he podido grabar el test {}",test);
+                    log.error("Ha ocurrido la siguiente excepcion {}", exception.getMessage());
+                    log.error("todo el test: {}", test.toJson());
+                }
 
                 model.addAttribute("contadoresTest", contadoresTest);
                 model.addAttribute("preguntas", preguntasFalladas);
@@ -168,7 +181,7 @@ public class FrontEndController {
                 // * media de aciertos
                 // * media de fallos
                 //
-                TestStatsDTO testStats = testService.getStatsFromUsersname(principal.getName());
+                TestStatsDTO testStats = testService.getStatsFromUsername(principal.getName());
                 log.info("estadisticas {}", testStats);
                 model.addAttribute("stats", testStats);
 
@@ -225,9 +238,17 @@ public class FrontEndController {
         test.setAciertos(0);
         test.setFallos(0);
 
-        //actualiza info de test.
-        log.debug("el test {} {}",test.getId(), test);
-        testService.grabarTest(test,principal.getName());
+        try {
+            //actualiza info de test.
+            log.debug("el test {} {}",test.getId(), test);
+            //grabamos el test en bbdd
+            testService.grabarTest(test, principal.getName());
+        } catch (Exception exception) {
+            log.error("No he podido grabar el test {}",test);
+            log.error("Ha ocurrido la siguiente excepcion {}", exception.getMessage());
+            log.error("todo el test: {}", test.toJson());
+        }
+
 
         return "guardado "+test.getId();
     }
@@ -250,7 +271,7 @@ public class FrontEndController {
         // * media de aciertos
         // * media de fallos
         //
-        TestStatsDTO testStats = testService.getStatsFromUsersname(principal.getName());
+        TestStatsDTO testStats = testService.getStatsFromUsername(principal.getName());
         log.info("estadisticas {}", testStats);
         model.addAttribute("stats", testStats);
         return "backstage/index";

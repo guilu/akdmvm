@@ -1,6 +1,6 @@
 package com.dbhstudios.akdmvm.domain.respository;
 
-import com.dbhstudios.akdmvm.auth.domain.model.User;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
 import com.dbhstudios.akdmvm.domain.entity.model.Test;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;

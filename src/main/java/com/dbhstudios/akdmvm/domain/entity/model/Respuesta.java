@@ -1,13 +1,14 @@
 package com.dbhstudios.akdmvm.domain.entity.model;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "TB04_RESPUESTA", schema = "BDD_AKDMVM")
+@Table(name = DomainModelNames.TB05_RESPUESTA)
 public class Respuesta extends BaseEntity {
 
     private static final long serialVersionUID = 4L;
@@ -56,4 +57,8 @@ public class Respuesta extends BaseEntity {
         this.correcta = correcta;
     }
 
+
+    public String toString() {
+        return "{ id:"+ this.getId() + ",correcta:" + this.isCorrecta() + "}";
+    }
 }

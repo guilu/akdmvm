@@ -1,7 +1,9 @@
 package com.dbhstudios.akdmvm.util;
-import lombok.Data;
 
-@Data
+
+import java.util.Arrays;
+import java.util.Objects;
+
 public class JSONResponse {
 
     private boolean success;
@@ -33,4 +35,50 @@ public class JSONResponse {
         code = null;
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String[] getMessages() {
+        return messages;
+    }
+
+    public void setMessages(String[] messages) {
+        this.messages = messages;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JSONResponse that = (JSONResponse) o;
+        return success == that.success && Objects.equals(redirectUrl, that.redirectUrl) && Objects.equals(code, that.code) && Arrays.equals(messages, that.messages);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(success, redirectUrl, code);
+        result = 31 * result + Arrays.hashCode(messages);
+        return result;
+    }
 }

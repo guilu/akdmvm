@@ -1,8 +1,9 @@
-package com.dbhstudios.akdmvm.auth.domain.repository;
+package com.dbhstudios.akdmvm.domain.respository.auth;
 
 
-import com.dbhstudios.akdmvm.auth.domain.model.PasswordResetToken;
-import com.dbhstudios.akdmvm.auth.domain.model.User;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
+import com.dbhstudios.akdmvm.domain.entity.auth.PasswordResetToken;
+import com.dbhstudios.akdmvm.domain.entity.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

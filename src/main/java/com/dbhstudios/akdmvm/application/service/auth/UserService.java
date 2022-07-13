@@ -1,15 +1,15 @@
-package com.dbhstudios.akdmvm.auth.service;
+package com.dbhstudios.akdmvm.application.service.auth;
 
 
-import com.dbhstudios.akdmvm.auth.domain.model.*;
 import com.dbhstudios.akdmvm.domain.dto.auth.UserDTO;
 import com.dbhstudios.akdmvm.domain.dto.auth.UserDetailsAK;
+import com.dbhstudios.akdmvm.domain.entity.auth.*;
 import com.dbhstudios.akdmvm.infraestructure.event.AuditEvent;
 import com.dbhstudios.akdmvm.infraestructure.auth.UserAlreadyExistsException;
-import com.dbhstudios.akdmvm.auth.domain.repository.PasswordResetTokenRepository;
-import com.dbhstudios.akdmvm.auth.domain.repository.RoleRepository;
-import com.dbhstudios.akdmvm.auth.domain.repository.UserRepository;
-import com.dbhstudios.akdmvm.auth.domain.repository.VerificationTokenRepository;
+import com.dbhstudios.akdmvm.domain.respository.auth.PasswordResetTokenRepository;
+import com.dbhstudios.akdmvm.domain.respository.auth.RoleRepository;
+import com.dbhstudios.akdmvm.domain.respository.auth.UserRepository;
+import com.dbhstudios.akdmvm.domain.respository.auth.VerificationTokenRepository;
 import com.dbhstudios.akdmvm.infraestructure.mail.MailService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

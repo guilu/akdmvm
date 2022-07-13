@@ -1,6 +1,7 @@
-package com.dbhstudios.akdmvm.auth.domain.model;
+package com.dbhstudios.akdmvm.domain.entity.auth;
 
 import com.dbhstudios.akdmvm.domain.entity.BaseEntity;
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(schema = "BDD_AKDMVM", name = "TB00_VERIFICATION_TOKEN")
+@Table(name = DomainModelNames.TB00_VERIFICATION_TOKEN)
 public class VerificationToken extends BaseEntity {
     /**
      * The Constant EXPIRATION.

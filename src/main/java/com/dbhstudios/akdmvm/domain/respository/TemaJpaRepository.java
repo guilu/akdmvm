@@ -1,5 +1,6 @@
 package com.dbhstudios.akdmvm.domain.respository;
 
+import com.dbhstudios.akdmvm.domain.entity.DomainModelNames;
 import com.dbhstudios.akdmvm.domain.entity.model.Agrupacion;
 import com.dbhstudios.akdmvm.domain.entity.model.Tema;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +17,7 @@ public interface TemaJpaRepository extends PagingAndSortingRepository<Tema, Long
 
 	List<Tema> findByAgrupacion(Agrupacion agrupacion);
 
-	@Query(value = "SELECT DISTINCT T.* FROM BDD_AKDMVM.tb02_tema T, BDD_AKDMVM.tb03_pregunta P WHERE T.ID = P.TEMA_ID",nativeQuery = true)
+	@Query(value = "SELECT DISTINCT T.* FROM "+DomainModelNames.SCHEMA+"."+DomainModelNames.TB03_TEMA +" T, " + DomainModelNames.SCHEMA + "." + DomainModelNames.TB04_PREGUNTA  + " P WHERE T.ID = P.TEMA_ID",nativeQuery = true)
 	List<Tema> findTemasConPreguntas();
 
 	List<Tema> findByTextoContainingIgnoreCase(String cadena);
