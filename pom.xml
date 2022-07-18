@@ -10,9 +10,9 @@
     </parent>
     <groupId>com.dbhstudios</groupId>
     <artifactId>akdmvm</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <name>akdmvm</name>
-    <description>akdmvm</description>
+    <description>Academia para estudiar y realizar exámenes de tipo test.</description>
 
     <properties>
         <java.version>17</java.version>

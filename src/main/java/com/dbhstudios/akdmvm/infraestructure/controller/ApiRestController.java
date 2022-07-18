@@ -1,16 +1,12 @@
 package com.dbhstudios.akdmvm.infraestructure.controller;
 
 
-import com.dbhstudios.akdmvm.domain.entity.model.Agrupacion;
-import com.dbhstudios.akdmvm.domain.entity.model.Pregunta;
-import com.dbhstudios.akdmvm.domain.entity.model.Respuesta;
-import com.dbhstudios.akdmvm.domain.entity.model.Tema;
-import com.dbhstudios.akdmvm.application.service.AgrupacionService;
-import com.dbhstudios.akdmvm.application.service.PreguntaService;
-import com.dbhstudios.akdmvm.application.service.RespuestaService;
-import com.dbhstudios.akdmvm.application.service.TemaService;
+import com.dbhstudios.akdmvm.application.service.*;
+import com.dbhstudios.akdmvm.domain.dto.auth.UserDetailsAK;
+import com.dbhstudios.akdmvm.domain.entity.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,19 +18,19 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "api/v1",produces = MediaType.APPLICATION_JSON_VALUE)
 public class ApiRestController {
-
 	private final AgrupacionService agrupacionService;
 	private final TemaService temaService;
 	private final PreguntaService preguntaService;
 	private final RespuestaService respuestaService;
-	
+	private final TestService testService;
 	
 	@Autowired
-	public ApiRestController(AgrupacionService agrupacionService, TemaService temaservice, PreguntaService preguntaService, RespuestaService respuestaService) {
+	public ApiRestController(AgrupacionService agrupacionService, TemaService temaservice, PreguntaService preguntaService, RespuestaService respuestaService, TestService testService) {
 		this.agrupacionService = agrupacionService;
 		this.temaService = temaservice;
 		this.preguntaService = preguntaService;
 		this.respuestaService = respuestaService;
+		this.testService = testService;
 	}
 
 	@RequestMapping("/agrupaciones")
@@ -61,8 +57,6 @@ public class ApiRestController {
 	public List<Respuesta> getRespuestas(){
 		return this.respuestaService.getRespuestas();
 	}
-	
-	
 
 	@RequestMapping("/tema/{id}/preguntas")
 	public List<Pregunta> getPreguntasByTema(@PathVariable("id") Long id, @RequestParam(required = false, defaultValue = "false") Boolean scramble){
@@ -72,10 +66,8 @@ public class ApiRestController {
 		} else {
 			return this.preguntaService.getAllByTema(tema);
 		}
-
 	}
-	
-	
+
 	@RequestMapping("/pregunta/{id}/respuestas")
 	public List<Respuesta> getRespuestasDePregunta(@PathVariable("id")Long id) {
 		return this.respuestaService.getRespuestasDePregunta(this.preguntaService.getById(id));
@@ -89,6 +81,11 @@ public class ApiRestController {
 	@RequestMapping("/respuesta/{id}/pregunta")
 	public Pregunta getPreguntaDeRespuesta(@PathVariable("id")Long id) {
 		return this.preguntaService.getPreguntaContainingRespuesta(id);
+	}
+
+	@RequestMapping("⁄tests")
+	public List<Test> getTestsOfCurrentUser(@AuthenticationPrincipal UserDetailsAK userDetails){
+		return this.testService.getTestsOfUser(userDetails);
 	}
 
 }

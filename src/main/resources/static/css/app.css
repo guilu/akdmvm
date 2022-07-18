@@ -221,9 +221,15 @@ html {
     margin-top: 1.3em;
   }
 }
-
+.fa-fire {
+//background: -webkit-linear-gradient(#ffc107, #ff0000);
+  background: -webkit-linear-gradient(#9c27b0, #00bcd4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .fa-fire-alt {
-  background: -webkit-linear-gradient(#ffc107, #ff0000);
+  //background: -webkit-linear-gradient(#ffc107, #ff0000);
+  background: -webkit-linear-gradient(#9c27b0, #00bcd4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

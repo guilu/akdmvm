@@ -80,63 +80,6 @@ public class AuthenticationController {
         this.eventPublisher = eventPublisher;
     }
 
-
-    /**
-     * Validate a forgot password token link from an email, and if valid, show the registration success page.
-     *
-     * @param request the request
-     * @param model   the model
-     * @param token   the token
-     * @return the model and view
-     * @throws UnsupportedEncodingException the unsupported encoding exception
-     */
-    @GetMapping("/auth/registrationConfirm")
-    public ModelAndView confirmRegistration(final HttpServletRequest request, final ModelMap model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
-
-        log.debug("UserAPI.confirmRegistration: called with token: {}", token);
-
-        Locale locale = request.getLocale();
-        model.addAttribute("lang", locale.getLanguage());
-        final String result = userService.validateVerificationToken(token);
-
-        if (result.equals("valid")) {
-            final User user = userService.getUserByVerificationToken(token);
-            if (user != null) {
-                userService.authWithoutPassword(user, request);
-                userService.deleteVerificationToken(token);
-
-                AuditEvent registrationAuditEvent = new AuditEvent(this,
-                        user,
-                        request.getSession().getId(),
-                        HttpUtils.getClientIP(request),
-                        request.getHeader("User-Agent"),
-                        "Registration Confirmation",
-                        "Success",
-                        "Registration Confirmed. User logged in.",
-                        null);
-                eventPublisher.publishEvent(registrationAuditEvent);
-            }
-
-            model.addAttribute("message", messages.getMessage("message.accountVerified", null, locale));
-
-            log.debug("UserAPI.confirmRegistration: account verified and user logged in!");
-
-            String redirectString = "redirect:" + registrationSuccessURI;
-            return new ModelAndView(redirectString, model);
-        }
-
-        model.addAttribute("messageKey", "auth.message." + result);
-        model.addAttribute("expired", "expired".equals(result));
-        model.addAttribute("token", token);
-
-        log.debug("UserAPI.confirmRegistration: failed.  Token not found or expired.");
-
-        String redirectString = "redirect:" + registrationNewVerificationURI;
-        return new ModelAndView(redirectString, model);
-    }
-
-
-
     /**
      * Register a new user account.
      *
@@ -147,9 +90,10 @@ public class AuthenticationController {
      * is an error.
      */
     @PostMapping(value = "/auth/registration", produces = "application/json")
-    public ResponseEntity<JSONResponse> registerUserAccount(@Valid final UserDTO userDto, final HttpServletRequest request) {
+    public ResponseEntity<JSONResponse> registerUserAccount(@Valid final UserDTO userDto,HttpServletRequest request) {
 
         log.debug("Registering user account with information: {}", userDto);
+        log.debug("recibida llamada con la ip {}",request.getRemoteAddr());
 
         User registeredUser = null;
         try {
@@ -208,6 +152,65 @@ public class AuthenticationController {
         // If there were no exceptions then the registration was a success!
         return new ResponseEntity<JSONResponse>( new JSONResponse(true, registrationPendingURI, 0, "Registration Successful!"), HttpStatus.OK);
     }
+
+
+
+    /**
+     * Validate a forgot password token link from an email, and if valid, show the registration success page.
+     *
+     * @param request the request
+     * @param model   the model
+     * @param token   the token
+     * @return the model and view
+     * @throws UnsupportedEncodingException the unsupported encoding exception
+     */
+    @GetMapping("/auth/registrationConfirm")
+    public ModelAndView confirmRegistration(HttpServletRequest request, final ModelMap model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
+
+        log.debug("UserAPI.confirmRegistration: called with token: {}", token);
+        log.debug("en el auth controller la ip es {}", request.getRemoteAddr());
+
+        Locale locale = request.getLocale();
+        model.addAttribute("lang", locale.getLanguage());
+        final String result = userService.validateVerificationToken(token);
+
+        if (result.equals("valid")) {
+            final User user = userService.getUserByVerificationToken(token);
+            if (user != null) {
+                userService.authWithoutPassword(user, request);
+                userService.deleteVerificationToken(token);
+
+                AuditEvent registrationAuditEvent = new AuditEvent(this,
+                        user,
+                        request.getSession().getId(),
+                        HttpUtils.getClientIP(request),
+                        request.getHeader("User-Agent"),
+                        "Registration Confirmation",
+                        "Success",
+                        "Registration Confirmed. User logged in.",
+                        null);
+                eventPublisher.publishEvent(registrationAuditEvent);
+            }
+
+            model.addAttribute("message", messages.getMessage("message.accountVerified", null, locale));
+
+            log.debug("UserAPI.confirmRegistration: account verified and user logged in!");
+
+            String redirectString = "redirect:" + registrationSuccessURI;
+            return new ModelAndView(redirectString, model);
+        }
+
+        model.addAttribute("messageKey", "auth.message." + result);
+        model.addAttribute("expired", "expired".equals(result));
+        model.addAttribute("token", token);
+
+        log.debug("UserAPI.confirmRegistration: failed.  Token not found or expired.");
+
+        String redirectString = "redirect:" + registrationNewVerificationURI;
+        return new ModelAndView(redirectString, model);
+    }
+
+
 
 
     /**

@@ -12,12 +12,13 @@ import java.util.List;
 public interface TestRespository extends PagingAndSortingRepository<Test, Long> {
 
     List<Test> findByFinalizadoTrueAndUser(User user);
-
+    List<Test> findByUser(User user);
 
     @Query("SELECT (SUM(t.aciertos)*1.0/SUM(t.numeroPreguntasTotal))*100.0 FROM Test t where t.user=?1 group by t.user")
     Double findAvgAciertosByUser(User user);
 
     @Query("SELECT (SUM(t.fallos)*1.0/SUM(t.numeroPreguntasTotal))*100.0 FROM Test t where t.user=?1 group by t.user")
     Double findAvgFallosByUser(User user);
+
 
 }

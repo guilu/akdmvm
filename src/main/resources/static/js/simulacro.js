@@ -110,20 +110,23 @@ const Simulacro = (function () {
             //                  3
             // ---------------------------------
             //       numPreguntasTotales
-            let nota;
-            /*
-            if( aciertos < (errores/3) ) {
-                nota = 0;
-            } else {
-                nota = ((aciertos - (errores/3)) * 10 )/ $('#numPreguntasTotales').val();
-            }
-            */
-            //NUEVA PUNTUACIÓN:
-            // PUNTUACIÓN SOBRE 10 ----> (aciertos * 10 ) / preguntas;
-            // cada pregunta errónea resta 0,5
-            // cada pregunta no contestada resta 0,25
+            let nota,preguntasTotales;
+            preguntasTotales = $('#numPreguntasTotales').val();
 
-            nota = ((aciertos * 10 ) / $('#numPreguntasTotales').val()) -  (errores * 0.5)  - (blancos * 0.25)
+
+            aciertos = 95;
+            errores = 8;
+            blancos = 7;
+            preguntasTotales = 110;
+
+            /* formula 1 error quita 3 bien, blancos no quitan */
+            //nota = ((aciertos - (errores/3)) * 10 )/ $('#numPreguntasTotales').val();
+
+            /* formula 1 error quita 0.5 y 1 blanco quita 0.25 */
+            //nota = ((aciertos * 10 ) / preguntasTotales) -  (errores * 0.5)  - (blancos * 0.25)
+
+            /* formula oficial */
+            nota = ((aciertos - (errores/2) - (blancos/4) ) * 10 ) / preguntasTotales;
             if (nota < 0) nota = 0;
 
             //Porcentaje de acierto de lo contestado (se entiende)....

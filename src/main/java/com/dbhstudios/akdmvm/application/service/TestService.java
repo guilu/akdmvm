@@ -1,5 +1,6 @@
 package com.dbhstudios.akdmvm.application.service;
 
+import com.dbhstudios.akdmvm.domain.dto.auth.UserDetailsAK;
 import com.dbhstudios.akdmvm.domain.entity.auth.User;
 import com.dbhstudios.akdmvm.application.service.auth.UserService;
 import com.dbhstudios.akdmvm.domain.dto.ContadoresTest;
@@ -12,6 +13,7 @@ import com.dbhstudios.akdmvm.domain.entity.model.Test;
 import com.dbhstudios.akdmvm.domain.respository.TestRespository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -119,5 +121,10 @@ public class TestService {
             return new TestStatsDTO();
         }
 
+    }
+
+    public List<Test> getTestsOfUser(UserDetailsAK userDetails) {
+        User user = userService.findUserByEmail(userDetails.getUsername());
+        return this.testRespository.findByUser(user);
     }
 }
