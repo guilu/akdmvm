@@ -1,6 +1,6 @@
 user:
   security:
-    unprotectedURIs: /,/index,/searched,/buscar,/favicon.ico,/webfonts/**/*,/css/**/*,/js/**/*,/img/**/*,/register,/auth/registration,/auth/registrationConfirm,/forgot-password,/sendRegistrationToken,/resetPassword,/changePassword,/savePassword,/oauth/**,/h2-console/**
+    unprotectedURIs: /,/index,/searched,/buscar,/favicon.ico,/webfonts/**/*,/css/**/*,/js/**/*,/img/**/*,/register,/auth/registration,/auth/registrationConfirm,/forgot-password,/sendRegistrationToken,/resetPassword,/changePassword,/savePassword,/oauth/**,/h2-console/**,/registration-pending-verification
     disableCSRFdURIs: /h2-console/**,/simulacro/iniciar
 
 spring:

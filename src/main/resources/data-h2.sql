@@ -1,7 +1,7 @@
 insert into BDD_AKDMVM.TB00_USER(first_name,last_name,email,password,enabled,locked) VALUES
-('Diego','B H','user@gmail.com','$2a$10$.dNJIVmCUUqNBi8dTB4Tf.3teRGuZDpwGM2wcCeVwC9AC3SkNmKdu',true,false);
+('Diego','B H','user@gmail.com','$2a$11$w/E4CY0J.Go25wDeDaUodOanAObV3rl08qg.UgovvgI/TAnxgfW7G',true,false);
 insert into BDD_AKDMVM.TB00_USER(first_name,last_name,email,password,enabled,locked) VALUES
-('Diego','B H','admin@gmail.com','$2a$10$.dNJIVmCUUqNBi8dTB4Tf.3teRGuZDpwGM2wcCeVwC9AC3SkNmKdu',true,false);
+('Diego','B H','admin@gmail.com','$2a$11$w/E4CY0J.Go25wDeDaUodOanAObV3rl08qg.UgovvgI/TAnxgfW7G',true,false);
 
 insert into BDD_AKDMVM.TB00_ROLE(NAME) VALUES ('ROLE_USER');
 insert into BDD_AKDMVM.TB00_ROLE(NAME) VALUES ('ROLE_ADMIN');
